@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Струны будущего — Онлайн-школа Никиты Осадчук</title>
+  <meta name="description" content="Онлайн-школа музыки: гитара, фортепиано, укулеле. Персональные программы, реальные результаты, живые отзывы и поддержка 24/7." />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: linear-gradient(135deg,#191e2b 0%,#2b2966 55%,#3e53a6 100%);
+      --panel: rgba(38,41,69,.92);
+      --glass: rgba(255,255,255,.07);
+      --line: #ffffff22;
+      --text: #e2e7fa;
+      --white:#fff;
+      --a1:#42d6ff;
+      --a2:#b399ff;
+      --btn: linear-gradient(90deg,#42d6ff 0%,#b399ff 100%);
+      --btn2: linear-gradient(90deg,#b399ff 0%,#42d6ff 100%);
+      --rad: 1.6rem;
+      --shadow: 0 8px 30px rgba(0,0,0,.18);
+      --trans: .28s cubic-bezier(.22,.61,.36,1);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--white);font-family:Montserrat,system-ui,Arial,sans-serif}
+    a{color:inherit}
+
+    /* Header */
+    header{
+      position:sticky;top:0;z-index:20;
+      background:rgba(25,27,55,.75);
+      backdrop-filter: blur(8px);
+      display:flex;align-items:center;justify-content:space-between;
+      padding:12px 5vw;border-bottom:1px solid #ffffff0f
+    }
+    .logo-img{height:56px;background:#fff;border-radius:14px;padding:2px 8px;box-shadow:0 0 18px #42d6ff38;object-fit:contain}
+    nav{display:flex;gap:1.2rem;flex-wrap:wrap}
+    nav a{font-weight:700;text-decoration:none;opacity:.95;position:relative;padding-bottom:2px}
+    nav a::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--a2);transition:width .2s}
+    nav a:hover{color:var(--a1)} nav a:hover::after{width:100%}
+
+    /* Hero */
+    .hero{min-height:70vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:60px 16px 24px;position:relative;overflow:hidden}
+    .bg-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.36;filter:blur(1px) brightness(1.08) saturate(1.18);pointer-events:none}
+    .hero h1{font-size:clamp(28px,4vw,44px);margin:0 0 .6rem;background:linear-gradient(90deg,#42d6ff 30%,#b399ff 90%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:800;letter-spacing:.5px;text-shadow:0 2px 24px #00000022}
+    .hero p{max-width:720px;color:var(--text);font-size:clamp(15px,1.9vw,20px);margin:0 0 1.2rem}
+    .cta{display:inline-block;margin-top:.3rem;padding:14px 24px;border-radius:999px;background:var(--btn);font-weight:800;text-decoration:none;box-shadow:0 8px 26px #42d6ff33;transition:transform .16s,background .18s}
+    .cta:hover{transform:translateY(-2px) scale(1.04);background:var(--btn2)}
+
+    /* Blocks */
+    .block{max-width:1120px;margin:36px auto;padding:34px 18px;background:var(--panel);border-radius:var(--rad);border:1px solid var(--line);box-shadow:var(--shadow);text-align:center}
+    .block h2{font-size:clamp(24px,3vw,32px);margin:0 0 16px;background:linear-gradient(90deg,#42d6ff 0%,#b399ff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:800}
+
+    /* Courses tabs */
+    .courses{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin:14px 0 6px}
+    .tab{flex:1 1 240px;max-width:340px;background:var(--glass);border:1px solid var(--line);border-radius:18px;padding:16px 14px;font-weight:700;cursor:pointer;box-shadow:0 6px 18px #42d6ff1a;transition:transform .18s,box-shadow .2s,background .2s}
+    .tab:hover{transform:translateY(-2px)}
+    .tab.active{background:linear-gradient(120deg,#42d6ff 8%,#b399ff 100%);color:#1b2255;border-color:#ffffff88;box-shadow:0 14px 36px #42d6ff44}
+
+    .tabpanel{display:none;margin-top:20px}
+    .tabpanel.active{display:block}
+
+    /* Cards (abonements) */
+    .cards{display:flex;flex-wrap:wrap;gap:22px 14px;justify-content:center;margin-top:16px}
+    .card{background:var(--glass);border:1.3px solid var(--line);border-radius:18px;box-shadow:0 8px 24px #00000018;min-width:260px;max-width:340px;flex:1 1 300px;padding:16px 16px 18px;text-align:left;transition:transform .18s, box-shadow .2s}
+    .card:hover{transform:translateY(-4px);box-shadow:0 18px 42px #00000028}
+    .card h3{margin:0 0 6px;font-size:18px}
+    .meta{color:#9edcff;font-size:13px;font-weight:700;margin-bottom:8px}
+    .sub{opacity:.9;margin-bottom:8px}
+    .card ul{margin:8px 0 10px 18px}
+    .card li{margin:6px 0}
+    .note{margin-top:8px;color:var(--a2);font-style:italic}
+
+    /* Video block (results) */
+    .videowrap{max-width:720px;margin:28px auto 8px;background:var(--glass);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 10px 30px #00000022}
+    .videowrap video{display:block;width:100%;height:auto;border-radius:14px;background:#000}
+    .caption{margin-top:10px;color:var(--a2);font-weight:700}
+
+    /* Advantages grid */
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+    .adv{background:var(--glass);border:1px solid var(--line);border-radius:16px;padding:14px 16px;font-weight:700;box-shadow:0 6px 16px #00000015}
+
+    /* FAQ */
+    .faq .item{background:var(--glass);border:1px solid var(--line);border-radius:14px;padding:14px 16px;text-align:left}
+    .faq .item b{display:block;margin-bottom:6px}
+    .faq .item+.item{margin-top:10px}
+
+    /* Contacts */
+    .btn-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+    .btn{display:inline-flex;align-items:center;gap:8px;background:var(--btn);border:0;border-radius:14px;padding:12px 16px;color:#fff;font-weight:800;text-decoration:none;box-shadow:0 8px 22px #42d6ff2a;transition:transform .16s,background .18s}
+    .btn:hover{transform:translateY(-2px);background:var(--btn2)}
+
+    /* Footer */
+    footer{margin-top:40px;padding:24px 5vw;background:rgba(25,27,55,.85);backdrop-filter:blur(7px);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid #ffffff12}
+    .fsocial{display:flex;gap:10px}
+    .fsocial a{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:#ffffff22;transition:transform .16s,background .18s}
+    .fsocial a:hover{transform:translateY(-2px);background:#42d6ff}
+
+    /* Reveal on scroll */
+    .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s var(--trans),transform .6s var(--trans)}
+    .reveal.show{opacity:1;transform:none}
+
+    /* Responsive tweaks */
+    @media (max-width:820px){
+      nav{gap:.8rem}
+      .card{text-align:left}
+      .card ul{margin-left:18px}
+    }
+    @media (max-width:560px){
+      header{padding:10px 4vw}
+      .logo-img{height:46px}
+      .btn-row{gap:10px}
+      .videowrap{padding:12px;border-radius:14px}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <img src="логотип_белый.png" alt="Логотип Никиты Осадчука" class="logo-img">
+    <nav>
+      <a href="#about">О школе</a>
+      <a href="#courses">Курсы</a>
+      <a href="#abonements">Абонементы</a>
+      <a href="#advantages">Преимущества</a>
+      <a href="#reviews">Отзывы</a>
+      <a href="#results">Результаты</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <video class="bg-video" autoplay muted loop playsinline>
+      <source src="guitar-bg.mp4" type="video/mp4">
+    </video>
+    <h1>Струны будущего: онлайн-школа Никиты Осадчука</h1>
+    <p>Персональные программы, поддержка 24/7 и реальный прогресс. Гитара, фортепиано, укулеле — начнём сегодня.</p>
+    <a href="https://t.me/nikitaguitar_bot" class="cta" target="_blank" rel="noopener">Записаться на пробный урок</a>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="block reveal">
+    <h2>О школе</h2>
+    <p style="max-width:860px;margin:0 auto;color:var(--text)">
+      Тут учатся без «таланта по умолчанию». Делаем музыку доступной: короткие понятные шаги,
+      гибкий график, домашки с обратной связью и забота 24/7. Ты играешь первые песни уже в первый месяц, а дальше — только жирнее.
+    </p>
+  </section>
+
+  <!-- COURSES -->
+  <section id="courses" class="block reveal">
+    <h2>Курсы и направления</h2>
+    <div class="courses" id="courseTabs">
+      <div class="tab active" data-tab="guitar">🎸 Гитара / Электрогитара</div>
+      <div class="tab" data-tab="piano">🎹 Фортепиано</div>
+      <div class="tab" data-tab="ukulele">🎶 Укулеле</div>
+    </div>
+  </section>
+
+  <!-- ABONEMENTS -->
+  <section id="abonements" class="block reveal">
+    <!-- GUITAR -->
+    <div class="tabpanel active" id="tab-guitar">
+      <h2>Абонементы: Гитара / Электрогитара</h2>
+      <div class="cards">
+        <div class="card reveal">
+          <div class="meta">Выгода до 15%</div>
+          <h3>👤 Личный абонемент (1 месяц)</h3>
+          <div class="sub">Индивидуальное обучение с персональной программой</div>
+          <ul>
+            <li>4 занятия (50 мин) — <b>3 690₽</b> (922₽/урок)</li>
+            <li>6 занятий (50 мин) — <b>5 290₽</b> (881₽/урок)</li>
+            <li>8 занятий (50 мин) — <b>6 890₽</b> (861₽/урок)</li>
+          </ul>
+          <div class="note">Опция переноса занятий на следующий абонемент: <b>590₽</b> (1 раз в месяц)</div>
+        </div>
+
+        <div class="card reveal">
+          <div class="meta">Выгода до 20%</div>
+          <h3>👥 Личный абонемент (2 месяца)</h3>
+          <div class="sub">Оптимальный вариант для стабильного прогресса</div>
+          <ul>
+            <li>8 занятий (50 мин) — <b>7 190₽</b> (899₽/урок)</li>
+            <li>12 занятий (50 мин) — <b>10 490₽</b> (874₽/урок)</li>
+            <li>16 занятий (50 мин) — <b>13 590₽</b> (849₽/урок)</li>
+          </ul>
+          <div class="note">Опция переноса занятий на следующий абонемент: <b>590₽</b> (1 раз в месяц)</div>
+        </div>
+
+        <div class="card reveal">
+          <h3>🌞 Утро с гитарой</h3>
+          <div class="sub">Занятия с 6:00 до 8:00 по мск</div>
+          <ul>
+            <li>4 занятия (50 мин) — <b>3 390₽</b> (848₽/урок)</li>
+            <li>6 занятий (50 мин) — <b>4 890₽</b> (815₽/урок)</li>
+            <li>8 занятий (50 мин) — <b>6 390₽</b> (798₽/урок)</li>
+          </ul>
+          <div class="note">Опция переноса занятий на следующий абонемент: <b>590₽</b> (1 раз в месяц)</div>
+        </div>
+
+        <div class="card reveal">
+          <h3>🎧 Научись подбирать на слух!</h3>
+          <div class="sub">Спецкурс по развитию музыкального слуха</div>
+          <ul>
+            <li>4 занятия (50 мин) — <b>3 690₽</b> (922₽/урок)</li>
+            <li>6 занятий (50 мин) — <b>5 290₽</b> (881₽/урок)</li>
+            <li>8 занятий (50 мин) — <b>6 890₽</b> (861₽/урок)</li>
+          </ul>
+          <div class="note">Опция переноса занятий на следующий абонемент: <b>590₽</b> (1 раз в месяц)</div>
+        </div>
+
+        <div class="card reveal">
+          <div class="meta">Выгода 20%</div>
+          <h3>🏠 Семейный абонемент</h3>
+          <div class="sub">Можно делить между 2 учениками</div>
+          <ul>
+            <li>4 занятия (50 мин) — <b>3 490₽</b> (872₽/урок)</li>
+            <li>6 занятий (50 мин) — <b>5 190₽</b> (865₽/урок)</li>
+            <li>8 занятий (50 мин) — <b>6 790₽</b> (848₽/урок)</li>
+          </ul>
+          <div class="note">Опция переноса занятий на следующий абонемент: <b>590₽</b> (1 раз в месяц)</div>
+        </div>
+
+        <div class="card reveal">
+          <h3>🎸🎸 Двойные занятия (1.30ч)</h3>
+          <div class="sub">Углублённый разбор, быстрый результат</div>
+          <ul>
+            <li>4 занятия — <b>6 790₽</b> (1 697₽/урок)</li>
+            <li>6 занятий — <b>10 090₽</b> (1 681₽/урок)</li>
+            <li>8 занятий — <b>13 290₽</b> (1 661₽/урок)</li>
+          </ul>
+          <div class="note">Опция переноса занятий на следующий абонемент: <b>590₽</b> (1 раз в месяц)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PIANO -->
+    <div class="tabpanel" id="tab-piano">
+      <h2>Абонементы: Фортепиано / Пианино</h2>
+      <div class="cards">
+        <div class="card reveal">
+          <div class="meta">Выгода до 15%</div>
+          <h3>👤 Личный абонемент (1 месяц)</h3>
+          <div class="sub">Индивидуальное обучение с персональной программой</div>
+          <ul>
+            <li>4 занятия (50 мин) — <b>2 990₽</b> (748₽/урок)</li>
+            <li>6 занятий (50 мин) — <b>4 290₽</b> (715₽/урок)</li>
+            <li>8 занятий (50 мин) — <b>5 590₽</b> (699₽/урок)</li>
+          </ul>
+          <div class="note">Опция переноса занятий на следующий абонемент: <b>590₽</b> (1 раз в месяц)</div>
+        </div>
+
+        <div class="card reveal">
+          <div class="meta">Выгода до 20%</div>
+          <h3>👥 Личный абонемент (2 месяца)</h3>
+          <div class="sub">Оптимальный вариант для стабильного прогресса</div>
+          <ul>
+            <li>8 занятий (50 мин) — <b>5 790₽</b> (724₽/урок)</li>
+            <li>12 занятий (50 мин) — <b>8 490₽</b> (708₽/урок)</li>
+            <li>16 занятий (50 мин) — <b>10 990₽</b> (687₽/урок)</li>
+          </ul>
+          <div class="note">Опция переноса занятий на следующий абонемент: <b>590₽</b> (1 раз в месяц)</div>
+        </div>
+
+        <div class="card reveal">
+          <h3>🌞 Утро с пианино</h3>
+          <div class="sub">С 6:00 до 8:00 по мск</div>
+          <ul>
+            <li>4 занятия (50 мин) — <b>2 790₽</b> (698₽/урок)</li>
+            <li>6 занятий (50 мин) — <b>3 990₽</b> (665₽/урок)</li>
+            <li>8 занятий (50 мин) — <b>5 190₽</b> (649₽/урок)</li>
+          </ul>
+          <div class="note">Опция переноса занятий на следующий абонемент: <b>590₽</b> (1 раз в месяц)</div>
+        </div>
+
+        <div class="card reveal">
+          <h3>🎧 Научись подбирать на слух!</h3>
+          <div class="sub">Спецкурс по развитию музыкального слуха</div>
+          <ul>
+            <li>4 занятия (50 мин) — <b>2 990₽</b> (748₽/урок)</li>
+            <li>6 занятий (50 мин) — <b>4 290₽</b> (715₽/урок)</li>
+            <li>8 занятий (50 мин) — <b>5 590₽</b> (699₽/урок)</li>
+          </ul>
+          <div class="note">Опция переноса занятий на следующий абонемент: <b>590₽</b> (1 раз в месяц)</div>
+        </div>
+
+        <div class="card reveal">
+          <div class="meta">Выгода 20%</div>
+          <h3>🏠 Семейный абонемент</h3>
+          <div class="sub">Можно делить между 2 учениками</div>
+          <ul>
+            <li>4 занятия (50 мин) — <b>2 790₽</b> (698₽/урок)</li>
+            <li>6 занятий (50 мин) — <b>4 190₽</b> (698₽/урок)</li>
+            <li>8 занятий (50 мин) — <b>5 490₽</b> (686₽/урок)</li>
+          </ul>
+          <div class="note">Опция переноса занятий на следующий абонемент: <b>590₽</b> (1 раз в месяц)</div>
+        </div>
+
+        <div class="card reveal">
+          <h3>🎹🎹 Двойные занятия (1.30ч)</h3>
+          <div class="sub">Углублённый разбор, быстрый результат</div>
+          <ul>
+            <li>4 занятия — <b>5 490₽</b> (1 373₽/урок)</li>
+            <li>6 занятий — <b>8 190₽</b> (1 365₽/урок)</li>
+            <li>8 занятий — <b>10 970₽</b> (1 349₽/урок)</li>
+          </ul>
+          <div class="note">Опция переноса занятий на следующий абонемент: <b>590₽</b> (1 раз в месяц)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- UKULELE -->
+    <div class="tabpanel" id="tab-ukulele">
+      <h2>Абонементы: Укулеле</h2>
+      <div class="cards">
+        <div class="card reveal">
+          <div class="meta">Стандарт</div>
+          <h3>🌱 Укулеле (1 месяц)</h3>
+          <div class="sub">Базовый курс для начинающих</div>
+          <ul>
+            <li>4 занятия (50 мин) — <b>3 390₽</b> (848₽/урок)</li>
+            <li>6 занятий (50 мин) — <b>4 890₽</b> (815₽/урок)</li>
+            <li>8 занятий (50 мин) — <b>6 390₽</b> (799₽/урок)</li>
+          </ul>
+          <div class="note">Опция переноса занятий на следующий абонемент: <b>590₽</b> (1 раз в месяц)</div>
+        </div>
+
+        <div class="card reveal">
+          <div class="meta">Выгода</div>
+          <h3>🌿 Укулеле (2 месяца)</h3>
+          <div class="sub">Оптимальный вариант для стабильного прогресса</div>
+          <ul>
+            <li>8 занятий (50 мин) — <b>6 490₽</b> (811₽/урок)</li>
+            <li>12 занятий (50 мин) — <b>9 590₽</b> (799₽/урок)</li>
+            <li>16 занятий (50 мин) — <b>12 490₽</b> (781₽/урок)</li>
+          </ul>
+          <div class="note">Опция переноса занятий на следующий абонемент: <b>590₽</b> (1 раз в месяц)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADVANTAGES -->
+  <section id="advantages" class="block reveal">
+    <h2>Почему «Струны будущего»</h2>
+    <div class="grid">
+      <div class="adv reveal">Персональная программа + поддержка 24/7</div>
+      <div class="adv reveal">Результат уже через 2 месяца</div>
+      <div class="adv reveal">Онлайн с любой точки мира</div>
+      <div class="adv reveal">Живые отзывы и видео-кейсы</div>
+      <div class="adv reveal">Уютная атмосфера — без стресса</div>
+      <div class="adv reveal">Гибкий график и переносы занятий</div>
+    </div>
+  </section>
+
+  <!-- REVIEWS (Profi widget) -->
+  <section id="reviews" class="block reveal">
+    <h2>Отзывы учеников</h2>
+    <div style="display:flex;justify-content:center">
+      <div class="profi-widget" data-id="55c987bcf8b6d50c95d410fc6857f8be" data-type="210x190"></div>
+    </div>
+    <script src="https://profi.ru/jqs/widget/widget.js"></script>
+
+    <div style="max-width:620px;margin:18px auto 0">
+      <div style="background:#ffffff14;border:1px solid #ffffff22;border-radius:12px;padding:14px 16px;margin-bottom:10px">
+        <b>Анастасия</b><br>
+        <em>«Уже через месяц играю первые песни, и кайфую от процесса! Никита объясняет очень просто и поддерживает»</em>
+      </div>
+      <div style="background:#ffffff14;border:1px solid #ffffff22;border-radius:12px;padding:14px 16px">
+        <b>Игорь</b><br>
+        <em>«Первая онлайн-школа, где реально есть результат, а не просто просмотр видео. Рекомендую друзьям!»</em>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTS VIDEO -->
+  <section id="results" class="block reveal">
+    <h2>Результаты учеников</h2>
+    <div class="videowrap">
+      <video src="video.mp4" controls preload="metadata" poster="логотип_белый.png"></video>
+      <div class="caption">Вот так играют мои ученики через 2 месяца занятий</div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="howitworks" class="block reveal">
+    <h2>Как проходит обучение</h2>
+    <div class="faq" style="max-width:860px;margin:0 auto">
+      <div class="item reveal"><b>1. Заявка</b> Пишешь в Telegram и выбираешь удобное время.</div>
+      <div class="item reveal"><b>2. Цели</b> Определяем стиль, репертуар и график.</div>
+      <div class="item reveal"><b>3. Старт</b> Получаешь материалы и чат поддержки 24/7.</div>
+      <div class="item reveal"><b>4. Уроки</b> Созвоны онлайн, домашка с фидбеком.</div>
+      <div class="item reveal"><b>5. Результат</b> Записываем первые песни и двигаемся дальше.</div>
+    </div>
+  </section>
+
+  <!-- CONTACTS -->
+  <section id="contacts" class="block reveal">
+    <h2>Контакты и запись</h2>
+    <div class="btn-row" style="margin-bottom:10px">
+      <a class="btn" href="https://t.me/nikitaguitar_bot" target="_blank" rel="noopener">
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg" alt="" style="width:20px;height:20px;filter:invert(1)"> Записаться в Telegram
+      </a>
+    </div>
+
+    <div class="btn-row" style="margin-top:6px">
+      <a class="btn" href="https://vk.com/strunib?from=groups" target="_blank" rel="noopener">
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/vk.svg" alt="" style="width:20px;height:20px;filter:invert(1)"> VK
+      </a>
+      <a class="btn" href="https://t.me/nikguita" target="_blank" rel="noopener">
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg" alt="" style="width:20px;height:20px;filter:invert(1)"> Telegram
+      </a>
+      <a class="btn" href="https://www.instagram.com/osadchukguitar?igsh=MTIwdzdjazUxaWtoMA%3D%3D&utm_source=qr" target="_blank" rel="noopener">
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="" style="width:20px;height:20px;filter:invert(1)"> Instagram
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>© 2025 Никита Осадчук. Онлайн-школа музыки</div>
+    <div class="fsocial">
+      <a href="https://vk.com/strunib?from=groups" target="_blank" rel="noopener">
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/vk.svg" style="width:22px;height:22px;filter:invert(1)" alt="">
+      </a>
+      <a href="https://t.me/nikguita" target="_blank" rel="noopener">
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg" style="width:22px;height:22px;filter:invert(1)" alt="">
+      </a>
+      <a href="https://www.instagram.com/osadchukguitar?igsh=MTIwdzdjazUxaWtoMA%3D%3D&utm_source=qr" target="_blank" rel="noopener">
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" style="width:22px;height:22px;filter:invert(1)" alt="">
+      </a>
+    </div>
+  </footer>
+
+  <script>
+    // Tabs
+    document.querySelectorAll('.tab').forEach(t=>{
+      t.addEventListener('click',()=>{
+        document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+        t.classList.add('active');
+        const id = t.dataset.tab;
+        document.querySelectorAll('.tabpanel').forEach(p=>p.classList.remove('active'));
+        document.getElementById('tab-'+id).classList.add('active');
+        setTimeout(()=>window.scrollTo({top:document.getElementById('abonements').offsetTop-60,behavior:'smooth'}),100);
+      })
+    });
+
+    // Reveal on scroll
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target) }
+      })
+    },{threshold:.12});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  </script>
+</body>
+</html>
